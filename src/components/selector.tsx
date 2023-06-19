@@ -1,3 +1,5 @@
+'use client'
+
 import { Agent } from '@/interfaces/agents'
 import { motion } from 'framer-motion'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
