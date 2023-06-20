@@ -41,6 +41,7 @@ export default function AgentShower({ agent }: AgentProps) {
             height={30}
             color="#f4f4f5"
             className="object-contain"
+            priority
           />
         </div>
         <h2
@@ -69,7 +70,7 @@ export default function AgentShower({ agent }: AgentProps) {
             src={agent.background}
             alt={''}
             fill={true}
-            priority={true}
+            priority
             className="absolute top-0 left-0"
           />
         </motion.div>
@@ -85,7 +86,7 @@ export default function AgentShower({ agent }: AgentProps) {
             src={agent.fullPortraitV2}
             alt={`${agent.displayName} Portrait`}
             fill={true}
-            priority={true}
+            priority
             className="object-contain"
           />
         </motion.div>

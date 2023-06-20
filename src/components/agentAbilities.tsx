@@ -59,6 +59,7 @@ export default function AgentAbilities({
                 src={ability.displayIcon}
                 alt={`Habilidade ${index}`}
                 fill={true}
+                priority
                 className="object-contain"
               />
             </motion.div>
