@@ -1,3 +1,5 @@
+'use client'
+
 import { Ability } from '@/interfaces/agents'
 import { motion } from 'framer-motion'
 import Image from 'next/image'

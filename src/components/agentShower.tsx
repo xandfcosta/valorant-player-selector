@@ -1,3 +1,5 @@
+'use client'
+
 import { Ability, Agent } from '@/interfaces/agents'
 import { motion } from 'framer-motion'
 import localFont from 'next/font/local'
