@@ -2,16 +2,22 @@ import axios from 'axios'
 
 import { Agent } from '../interfaces/agents'
 import AgentsCarrousel from '@/components/agentsCarrousel'
+import { cache } from 'react'
 
 export default async function Home() {
-  const res = await axios.get('https://valorant-api.com/v1/agents', {
-    params: {
-      language: 'pt-BR',
-      isPlayableCharacter: 'true',
-    },
+  const cachedFetchValorantAgents = cache(async () => {
+    const res = await axios.get('https://valorant-api.com/v1/agents', {
+      params: {
+        language: 'pt-BR',
+        isPlayableCharacter: 'true',
+      },
+    })
+    return res
   })
 
-  if (!res) {
+  const res = await cachedFetchValorantAgents()
+
+  if (!res.data) {
     return <div>Erro na API</div>
   }
 
