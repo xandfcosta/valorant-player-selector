@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 import { Agent } from '../interfaces/agents'
-import AgentsCarrousel from '@/components/AgentsCarrousel'
+import AgentsCarrousel from '../components/AgentsCarrousel'
 import { cache } from 'react'
 
 export default async function Home() {
