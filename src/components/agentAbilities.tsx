@@ -18,9 +18,9 @@ export function AgentAbilities({
   selectedAbility,
   setSelectedAbility,
 }: AgentAbilitiesProps) {
-  const passive = abilities.filter((ability) => {
-    return ability.slot === 'Passive'
-  })[0]
+  // const passive = abilities.filter((ability) => {
+  //   return ability.slot === 'Passive'
+  // })[0]
   abilities = abilities.filter((ability) => {
     return ability.slot !== 'Passive'
   })
