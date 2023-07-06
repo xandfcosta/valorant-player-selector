@@ -1,103 +1,70 @@
 'use client'
 
 import { Ability, Agent } from '@/interfaces/agents'
-import { motion } from 'framer-motion'
-import localFont from 'next/font/local'
-import Image from 'next/image'
 import { useEffect, useState } from 'react'
-import AgentAbilities from './agentAbilities'
-
-const valorantFont = localFont({ src: '../../public/fonts/Valorant-Font.ttf' })
+import { AgentAbilities } from './AgentAbilities'
 
 interface AgentProps {
   agent: Agent
 }
-export default function AgentShower({ agent }: AgentProps) {
+export function AgentShower({ agent }: AgentProps) {
   const [selectedAbility, setSelectedAbility] = useState<Ability | null>(null)
 
   useEffect(() => {
     setSelectedAbility(agent.abilities[0])
 
-    const agentAudio = new Audio(agent.voiceLine.mediaList[0].wave)
+    const audio = document.getElementById(
+      'voice-line-audio',
+    ) as HTMLAudioElement
 
-    if (!agentAudio) return
-
-    agentAudio.volume = 0.3
-    agentAudio.play()
+    audio.volume = 0.3
+    audio.play()
   }, [agent.abilities, agent.voiceLine.mediaList])
 
   return (
-    <div className="grid grid-cols-3 items-center justify-items-center h-full">
+    <div className="flex flex-col justify-center items-center h-[80%] w-1/3 pr-12">
+      <audio id="voice-line-audio" src={agent.voiceLine.mediaList[0].wave} />
       {/* Basic info */}
-      <div className="flex flex-col px-6">
-        <div
-          className={`${valorantFont.className} flex gap-2 items-center text-zinc-100 text-6xl font-bold`}
-        >
-          {agent.displayName}
-          <Image
-            src={agent.role.displayIcon}
-            alt="Agent Role"
-            width={30}
-            height={30}
-            color="#f4f4f5"
-            className="object-contain"
-            priority
-          />
+      <div className="flex flex-col gap-4">
+        <div>
+          <h2 className="font-bebas text-zinc-200 text-xl tracking-[6px] font-light">
+            {agent.role.displayName}
+          </h2>
+          <h1 className="font-bebas text-yellow-100 text-9xl font-black">
+            {agent.displayName}
+          </h1>
         </div>
-        <h2
-          className={`${valorantFont.className} text-zinc-100 text-2xl font-bold`}
-        >
-          {agent.role.displayName}
-        </h2>
-        <p className="text-zinc-200 text-justify leading-relaxed">
+
+        <AgentAbilities
+          roleIconUrl={agent.role.displayIcon}
+          abilities={agent.abilities}
+          selectedAbility={selectedAbility ?? agent.abilities[0]}
+          setSelectedAbility={setSelectedAbility}
+        />
+
+        {/* <Image
+          src={agent.role.displayIcon}
+          alt="Agent Role"
+          width={30}
+          height={30}
+          color="#f4f4f5"
+          className="object-contain"
+          priority
+        /> */}
+
+        <p className="font-sans text-yellow-200 font-bold leading-snug">
           {agent.description}
         </p>
-      </div>
 
-      {/* Agent Image */}
-      <div
-        id="agentImage"
-        className="relative w-full min-h-[500px] h-[50%] flex justify-center"
-      >
-        <motion.div
-          key={`${agent.uuid}-back`}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          className="absolute top-0 left-0 w-full min-h-[500px] h-[50%]"
-        >
-          <Image
-            src={agent.background}
-            alt={''}
-            fill={true}
-            priority
-            className="absolute top-0 left-0"
-          />
-        </motion.div>
-        <motion.div
-          key={`${agent.uuid}-agent`}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ delay: 0.2 }}
-          className="relative w-full min-h-[500px] h-[50%]"
-        >
-          <Image
-            src={agent.fullPortraitV2}
-            alt={`${agent.displayName} Portrait`}
-            fill={true}
-            priority
-            className="object-contain"
-          />
-        </motion.div>
+        <div>
+          <h2 className="font-opensans font-medium text-2xl text-zinc-200">
+            {agent.role.displayName}
+          </h2>
+          <p className="font-sans font-light text-md text-zinc-200">
+            {agent.role.description}
+          </p>
+        </div>
       </div>
-
-      {/* Habilidades */}
-      <AgentAbilities
-        abilities={agent.abilities}
-        selectedAbility={selectedAbility ?? agent.abilities[0]}
-        setSelectedAbility={setSelectedAbility}
-      />
     </div>
   )
 }

@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 import { Agent } from '../interfaces/agents'
-import AgentsCarrousel from '@/components/agentsCarrousel'
+import AgentsCarrousel from '@/components/AgentsCarrousel'
 import { cache } from 'react'
 
 export default async function Home() {
@@ -24,7 +24,7 @@ export default async function Home() {
   const agents: Agent[] = res.data.data
 
   return (
-    <div className="flex flex-col justify-center w-full bg-zinc-900 h-full">
+    <div className="w-full h-full bg-zinc-900">
       <AgentsCarrousel agents={agents}></AgentsCarrousel>
     </div>
   )

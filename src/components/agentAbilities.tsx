@@ -3,94 +3,72 @@
 import { Ability } from '@/interfaces/agents'
 import { motion } from 'framer-motion'
 import Image from 'next/image'
-import localFont from 'next/font/local'
 import { Dispatch, SetStateAction } from 'react'
 
-const valorantFont = localFont({ src: '../../public/fonts/Valorant-Font.ttf' })
-
 interface AgentAbilitiesProps {
+  roleIconUrl: string
   abilities: Ability[]
   selectedAbility: Ability
   setSelectedAbility: Dispatch<SetStateAction<Ability | null>>
 }
 
-export default function AgentAbilities({
+export function AgentAbilities({
+  roleIconUrl,
   abilities,
   selectedAbility,
   setSelectedAbility,
 }: AgentAbilitiesProps) {
-  const abilityVariants = {
-    selected: {
-      height: 65,
-      opacity: 1,
-    },
-    notSelected: {
-      height: 50,
-      opacity: 0.5,
-    },
-  }
+  const passive = abilities.filter((ability) => {
+    return ability.slot === 'Passive'
+  })[0]
+  abilities = abilities.filter((ability) => {
+    return ability.slot !== 'Passive'
+  })
 
   return (
-    <div className="flex flex-col h-full gap-6 p-6 py-10 items-center">
-      <h1
-        className={`${valorantFont.className} flex gap-2 items-center text-zinc-100 text-6xl font-bold`}
-      >
-        Habilidades
-      </h1>
-      <div className="grid grid-cols-4 w-full justify-items-center items-center mb-6">
+    <div className="flex flex-col h-full gap-6 items-center">
+      <div className="grid grid-cols-5 w-full h-[70px] justify-items-center items-center rounded-md bg-zinc-500/30">
+        <div className="relative aspect-square select-none h-full overflow-hidden">
+          <Image
+            src={roleIconUrl}
+            alt="Agent Role"
+            fill
+            sizes="25%"
+            priority
+            className="object-contain"
+            style={{ opacity: 0.5 }}
+          />
+        </div>
         {abilities.map((ability, index) => {
-          if (ability.slot === 'Passive') return <></>
-
           return (
             <motion.div
-              key={ability.slot}
-              animate={
-                selectedAbility?.slot === ability.slot
-                  ? 'selected'
-                  : 'notSelected'
-              }
-              variants={abilityVariants}
-              className="relative aspect-square select-none"
-              onClick={() => {
-                setSelectedAbility(ability)
-              }}
+              key={`icon-${ability.slot}`}
+              className="relative aspect-square select-none w-[60%]"
             >
               <Image
                 src={ability.displayIcon}
                 alt={`Habilidade ${index}`}
-                fill={true}
+                fill
+                sizes="(max-width: 768px) 25vw, (max-width: 1200px) 25vw, 25vw"
                 priority
                 className="object-contain"
+                style={{ opacity: 0.5 }}
               />
             </motion.div>
           )
         })}
       </div>
-      <div className="h-full flex justify-between flex-col items-center">
-        <div className="flex flex-col justify-center items-center">
-          <h2 className="text-zinc-200 font-bold text-lg">
-            {selectedAbility?.displayName}
-          </h2>
-          <p className="text-zinc-200 text-justify leading-relaxed">
-            {selectedAbility?.description}
+      {/* {passive && (
+        <div
+          key={passive.slot}
+          className={`flex flex-col gap-2 items-center text-zinc-100 text-lg font-bold`}
+        >
+          Passiva: {passive.displayName}
+          <p className="text-zinc-200 text-justify leading-relaxed text-sm font-normal">
+            {passive.description}
           </p>
         </div>
-        {abilities.map((ability) => {
-          if (ability.slot !== 'Passive') return <></>
-
-          return (
-            <div
-              key={ability.slot}
-              className={`flex flex-col gap-2 items-center text-zinc-100 text-lg font-bold`}
-            >
-              Passiva: {ability.displayName}
-              <p className="text-zinc-200 text-justify leading-relaxed text-sm font-normal">
-                {ability.description}
-              </p>
-            </div>
-          )
-        })}
-      </div>
+      )} */}
     </div>
   )
 }
