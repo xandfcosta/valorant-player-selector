@@ -4,22 +4,16 @@ import { Agent } from '@/interfaces/agents'
 import { motion } from 'framer-motion'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import Image from 'next/image'
-import { Dispatch, SetStateAction } from 'react'
 
 interface SelectorProps {
   agents: Agent[]
-  setSelectedIndex: Dispatch<SetStateAction<number>>
-  selectedIndex: number
+  handleSelectorChange: (direction: 1 | -1) => void
 }
 
-export function Selector({
-  agents,
-  setSelectedIndex,
-  selectedIndex,
-}: SelectorProps) {
+export function Selector({ agents, handleSelectorChange }: SelectorProps) {
   return (
     <div className="flex flex-col items-center z-10">
-      <div className="relative w-[95%] h-[1px]">
+      <div className="relative w-full h-[1px]">
         <div className="absolute top-0 left-0 h-full w-[5px] bg-zinc-200"></div>
         <div className="absolute top-0 left-0 h-full w-full bg-zinc-200 opacity-50"></div>
         <div className="absolute top-0 right-0 h-full w-[5px] bg-zinc-200"></div>
@@ -28,7 +22,7 @@ export function Selector({
         <motion.div initial={{ opacity: 0.5 }} whileHover={{ opacity: 1 }}>
           <ChevronLeft
             onClick={() => {
-              setSelectedIndex(selectedIndex - 1)
+              handleSelectorChange(-1)
             }}
             size={100}
             color="#efefef"
@@ -71,7 +65,7 @@ export function Selector({
         <motion.div initial={{ opacity: 0.5 }} whileHover={{ opacity: 1 }}>
           <ChevronRight
             className="opacity-50 hover:opacity-100"
-            onClick={() => setSelectedIndex(selectedIndex + 1)}
+            onClick={() => handleSelectorChange(1)}
             size={100}
             color="#efefef"
           ></ChevronRight>

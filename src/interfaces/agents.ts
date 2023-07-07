@@ -1,4 +1,5 @@
 export interface Ability {
+  key: string
   slot: string
   displayName: string
   description: string

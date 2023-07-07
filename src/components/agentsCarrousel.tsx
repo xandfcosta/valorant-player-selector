@@ -13,6 +13,7 @@ interface AgentsCarrouselProps {
 
 export default function AgentsCarrousel({ agents }: AgentsCarrouselProps) {
   const [selectedIndex, setSelectedIndex] = useState<number>(0)
+  const [fromLeft, setFromLeft] = useState<boolean>(true)
   const [visibleAgents, setVisibleAgents] = useState<Agent[]>(
     getVisibleAgents(selectedIndex),
   )
@@ -35,6 +36,11 @@ export default function AgentsCarrousel({ agents }: AgentsCarrouselProps) {
     return doubleAgents.slice(actualIndex - 6, actualIndex + 7)
   }
 
+  function handleSelectorChange(direction: 1 | -1) {
+    setFromLeft(direction < 0)
+    setSelectedIndex(selectedIndex + direction)
+  }
+
   useEffect(() => {
     const agents = getVisibleAgents(selectedIndex)
     const selectedAgent = agents[Math.floor(visibleAgents.length / 2)]
@@ -45,20 +51,22 @@ export default function AgentsCarrousel({ agents }: AgentsCarrouselProps) {
   }, [selectedIndex])
 
   return (
-    <div className="realtive flex flex-col justify-center w-full h-full">
+    <div className="flex flex-col justify-center w-full h-full px-20">
+      {/* Absolute */}
       <AgentBackground
         url={selectedAgent.background}
         colors={selectedAgent.backgroundGradientColors}
       />
-      <AgentImage agent={selectedAgent} />
-      <div className="flex-1 z-10 flex justify-end">
+      <AgentImage fromLeft={fromLeft} agent={selectedAgent} />
+
+      {/* Relative */}
+      <div className="flex-1 z-10 flex justify-end items-center">
         <AgentShower agent={selectedAgent}></AgentShower>
       </div>
 
       <Selector
         agents={visibleAgents}
-        setSelectedIndex={setSelectedIndex}
-        selectedIndex={selectedIndex}
+        handleSelectorChange={handleSelectorChange}
       ></Selector>
     </div>
   )
