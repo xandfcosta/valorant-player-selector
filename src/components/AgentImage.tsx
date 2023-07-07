@@ -26,7 +26,7 @@ export function AgentImage({ agent, fromLeft }: AgentImageProps) {
             initial={initialState}
             animate={{ opacity: 1, translateX: '0px' }}
             exit={{ opacity: 0 }}
-            transition={{ ease: 'easeInOut', delay: 0.2 }}
+            transition={{ ease: 'easeInOut', duration: 0.5, delay: 0.2 }}
             className="relative w-full h-full overflow-hidden z-10"
           >
             <Image
@@ -51,8 +51,13 @@ export function AgentImage({ agent, fromLeft }: AgentImageProps) {
                 initial={initialState}
                 animate={{ opacity: 1, translateX: '0px' }}
                 exit={{ opacity: 0 }}
-                transition={{ ease: 'easeInOut', delay: 0.2 + index / 60 }}
-                className="relative w-full h-full overflow-hidden z-1"
+                transition={{
+                  ease: 'easeInOut',
+                  duration: 0.5,
+                  delay: 0.2 + index / 60,
+                }}
+                className="relative w-full h-full overflow-hidden"
+                style={{ zIndex: 8 - index }}
               >
                 <Image
                   src={agent.fullPortraitV2}
@@ -63,7 +68,7 @@ export function AgentImage({ agent, fromLeft }: AgentImageProps) {
                   className="absolute top-0 left-[50%] translate-x-[-50%] h-auto w-[70%]"
                   style={{
                     objectFit: 'contain',
-                    filter: `contrast(0) opacity(.7) drop-shadow(0 0 #${color})`,
+                    filter: `contrast(0) opacity(.3) drop-shadow(0 0 #${color})`,
                   }}
                 />
               </motion.div>
