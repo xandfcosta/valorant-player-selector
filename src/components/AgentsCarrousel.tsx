@@ -37,7 +37,16 @@ export default function AgentsCarrousel({ agents }: AgentsCarrouselProps) {
 
     return doubleAgents.slice(actualIndex - 6, actualIndex + 7)
   }
+  function handleAgentClick(index: number) {
+    console.log(index)
 
+    const agents = getVisibleAgents(selectedIndex + index)
+    const selectedAgent = agents[Math.floor(agents.length / 2)]
+
+    setSelectedIndex(selectedIndex + index)
+    setSelectedAgent(selectedAgent)
+    setVisibleAgents(agents)
+  }
   function handleSelectorChange(direction: 1 | -1) {
     setFromLeft(direction < 0)
     setSelectedIndex(selectedIndex + direction)
@@ -45,7 +54,7 @@ export default function AgentsCarrousel({ agents }: AgentsCarrouselProps) {
 
   useEffect(() => {
     const agents = getVisibleAgents(selectedIndex)
-    const selectedAgent = agents[Math.floor(visibleAgents.length / 2)]
+    const selectedAgent = agents[Math.floor(agents.length / 2)]
 
     setSelectedAgent(selectedAgent)
     setVisibleAgents(agents)
@@ -56,6 +65,7 @@ export default function AgentsCarrousel({ agents }: AgentsCarrouselProps) {
     <div className="flex flex-col justify-center w-full h-full px-20">
       {/* Absolute */}
       <AgentBackground
+        agentId={selectedAgent.uuid}
         url={selectedAgent.background}
         colors={selectedAgent.backgroundGradientColors}
       />
@@ -68,6 +78,7 @@ export default function AgentsCarrousel({ agents }: AgentsCarrouselProps) {
 
       <Selector
         agents={visibleAgents}
+        handleAgentClick={handleAgentClick}
         handleSelectorChange={handleSelectorChange}
       ></Selector>
     </div>

@@ -26,6 +26,7 @@ export function AgentShower({ agent }: AgentProps) {
       <audio id="voice-line-audio" src={agent.voiceLine.mediaList[0].wave} />
 
       {/* Details */}
+      <div className="absolute top-[223px] w-[107%] left-[-7%] h-[1px] bg-zinc-200"></div>
       <div className="absolute w-[1px] h-[100%] bg-zinc-200/50 left-[-5%] bottom-[-7%]"></div>
       <div className="absolute w-[1px] h-[100%] bg-zinc-200/20 left-[-7%] bottom-[-7%]"></div>
 
@@ -41,6 +42,8 @@ export function AgentShower({ agent }: AgentProps) {
         </div>
 
         <AgentAbilities
+          agentId={agent.uuid}
+          roleId={agent.role.uuid}
           roleIconUrl={agent.role.displayIcon}
           abilities={agent.abilities}
           selectedAbility={selectedAbility ?? agent.abilities[0]}

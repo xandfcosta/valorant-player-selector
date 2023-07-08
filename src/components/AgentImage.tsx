@@ -10,12 +10,15 @@ export function AgentImage({ agent, fromLeft }: AgentImageProps) {
   const initialState = fromLeft
     ? {
         opacity: 0,
-        translateX: '-100px',
+        translateX: '-50px',
       }
     : {
         opacity: 0,
-        translateX: '100px',
+        translateX: '50px',
       }
+  const finalState = { opacity: 1, translateX: '0px' }
+  const exitState = { opacity: 0 }
+  const transition = { ease: 'easeInOut', duration: 0.2 }
 
   return (
     <div className="absolute top-0 left-0 w-full h-full z-0 overflow-hidden">
@@ -24,9 +27,9 @@ export function AgentImage({ agent, fromLeft }: AgentImageProps) {
           <motion.div
             key={`${agent.uuid}-agent`}
             initial={initialState}
-            animate={{ opacity: 1, translateX: '0px' }}
-            exit={{ opacity: 0 }}
-            transition={{ ease: 'easeInOut', duration: 0.5, delay: 0.2 }}
+            animate={finalState}
+            exit={exitState}
+            transition={{ ...transition, delay: 0.2 }}
             className="relative w-full h-full overflow-hidden z-10"
           >
             <Image
@@ -49,13 +52,9 @@ export function AgentImage({ agent, fromLeft }: AgentImageProps) {
               <motion.div
                 key={`${agent.uuid}-agent`}
                 initial={initialState}
-                animate={{ opacity: 1, translateX: '0px' }}
-                exit={{ opacity: 0 }}
-                transition={{
-                  ease: 'easeInOut',
-                  duration: 0.5,
-                  delay: 0.2 + index / 60,
-                }}
+                animate={finalState}
+                exit={exitState}
+                transition={{ ...transition, delay: 0.2 + index / 40 }}
                 className="relative w-full h-full overflow-hidden"
                 style={{ zIndex: 8 - index }}
               >

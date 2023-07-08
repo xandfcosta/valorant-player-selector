@@ -6,6 +6,8 @@ import Image from 'next/image'
 import { Dispatch, SetStateAction } from 'react'
 
 interface AgentAbilitiesProps {
+  agentId: string
+  roleId: string
   roleIconUrl: string
   abilities: Ability[]
   selectedAbility: Ability
@@ -13,6 +15,8 @@ interface AgentAbilitiesProps {
 }
 
 export function AgentAbilities({
+  agentId,
+  roleId,
   roleIconUrl,
   abilities,
   selectedAbility,
@@ -32,11 +36,21 @@ export function AgentAbilities({
     <div className="flex flex-col  justify-center items-center">
       <div className="grid grid-cols-5 w-full h-[100px] justify-items-center items-center rounded-md gap-1">
         <div className="relative flex flex-col gap-2 items-center h-full w-full select-none bg-zinc-500/20 p-2">
+          {/* Detail */}
+          <div className="absolute top-[38%] left-[50%] translate-x-[-50%] w-2 h-[3px] bg-zinc-200"></div>
+
           {/* Role */}
           <h2 className="mx-2 w-full bg-zinc-200/50 px-2 text-center text-lg text-zinc-700 font-sans uppercase">
             Info
           </h2>
-          <div className="relative w-full h-full">
+          <motion.div
+            key={`icon-${roleId}-role`}
+            className="relative w-full h-full"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ delay: 0.2, duration: 0.3, ease: 'easeInOut' }}
+          >
             <Image
               src={roleIconUrl}
               alt="Agent Role"
@@ -46,7 +60,7 @@ export function AgentAbilities({
               className="object-contain"
               style={{ opacity: 0.5 }}
             />
-          </div>
+          </motion.div>
         </div>
 
         {/* Abilities */}
@@ -56,11 +70,16 @@ export function AgentAbilities({
               key={ability.slot}
               className="relative flex flex-col gap-2 items-center h-full w-full select-none bg-zinc-500/20 p-2"
             >
-              <h2 className="mx-2 w-full bg-zinc-200/50 px-2 text-center text-lg text-zinc-700 font-sans uppercase">
+              <div className="absolute top-[38%] left-[50%] translate-x-[-50%] w-2 h-[3px] bg-zinc-200"></div>
+              <h2 className="mx-2 w-full px-2 text-center text-lg text-zinc-200 font-sans uppercase">
                 {ability.key}
               </h2>
               <motion.div
-                key={`icon-${ability.slot}`}
+                key={`icon-${agentId}-${ability.slot}`}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ delay: 0.2, duration: 0.3, ease: 'easeInOut' }}
                 className="relative h-full w-full select-none"
               >
                 <Image
