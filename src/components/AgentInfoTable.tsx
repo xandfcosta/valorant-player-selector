@@ -19,6 +19,7 @@ export function AgentInfoTable({
   selectedItem,
   setSelectedItem,
 }: AgentInfoTableProps) {
+  const isMobile = screen.width < 768
   const headers = ['c', 'q', 'e', 'x']
   abilities = abilities.filter((ability) => {
     return ability.slot !== 'Passive'
@@ -28,12 +29,12 @@ export function AgentInfoTable({
 
     return ability
   })
-  role.key = 'Info'
+  role.key = isMobile ? '!' : 'Info'
   const infos = [role, ...abilities]
 
   return (
     <div className="relative grid grid-cols-5 w-full h-[100px] justify-items-center items-center rounded-md gap-1">
-      <div className="absolute top-[39%] w-[107%] left-[-7%] h-[1px] bg-zinc-200"></div>
+      <div className="absolute top-[39%] w-full md:w-[107%] left-0 md:left-[-7%] h-[1px] bg-zinc-200"></div>
 
       {infos.map((info, index) => {
         const headerStyle = {
@@ -51,6 +52,7 @@ export function AgentInfoTable({
         return (
           <motion.div
             key={index}
+            initial={{ backgroundColor: 'rgb(0 0 0 / 0)' }}
             animate={selectedStyle}
             className="relative flex flex-col gap-2 items-center h-full w-full select-none p-2 cursor-pointer"
             // style={selectedStyle}
@@ -59,6 +61,7 @@ export function AgentInfoTable({
             <div className="absolute top-[38%] left-[50%] translate-x-[-50%] w-2 h-[3px] bg-zinc-200"></div>
             <motion.h2
               key={index}
+              initial={{ backgroundColor: 'rgb(0 0 0 / 0)' }}
               animate={headerStyle}
               className="mx-2 w-full px-2 text-center text-lg font-sans uppercase"
               // style={headerStyle}

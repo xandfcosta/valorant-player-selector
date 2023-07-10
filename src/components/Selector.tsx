@@ -22,7 +22,6 @@ export function Selector({
 }: SelectorProps) {
   const initialState = { x: fromLeft ? '-100px' : '100px' }
   const finalState = { x: '0px' }
-  console.log(fromLeft)
 
   return (
     <div className="flex flex-col items-center z-10">

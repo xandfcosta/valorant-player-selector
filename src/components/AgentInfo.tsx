@@ -32,8 +32,8 @@ export function AgentInfo({ agent }: AgentInfoProps) {
   }, [agent.abilities, agent.role, agent.voiceLine.mediaList])
 
   return (
-    <div className="flex-1 z-10 flex justify-end items-start my-28">
-      <div className="relative flex flex-col h-full w-1/3 gap-6">
+    <div className="flex-1 z-10 flex justify-center md:justify-end items-start my-6 md:my-28">
+      <div className="relative grid grid-cols-[120px_1fr] grid-rows-[100px_1fr] gap-2 md:flex md:flex-col h-full w-full md:w-1/3 md:gap-6">
         <audio
           id="voice-line-audio"
           src={agent.voiceLine.mediaList[0].wave}
@@ -46,10 +46,10 @@ export function AgentInfo({ agent }: AgentInfoProps) {
 
         {/* Agent name */}
         <div>
-          <h2 className="font-bebas text-zinc-200 text-xl tracking-[6px] font-light">
+          <h2 className="font-bebas text-zinc-200 text-sm md:text-xl tracking-[6px] font-light">
             {agent.role.displayName}
           </h2>
-          <h1 className="font-bebas text-yellow-100 text-9xl font-black">
+          <h1 className="font-bebas text-yellow-100 text-4xl md:text-9xl font-black">
             {agent.displayName}
           </h1>
         </div>
@@ -68,20 +68,20 @@ export function AgentInfo({ agent }: AgentInfoProps) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ ease: 'easeOut' }}
-          className="flex flex-col flex-1 gap-6"
+          className="flex flex-col flex-1 gap-6 md:w-full col-span-2"
         >
           {showAgentDescription && (
-            <p className="font-sans text-yellow-200 font-medium leading-snug w-[80%]">
+            <p className="font-sans text-yellow-200 font-medium text-sm md:text-base leading-snug w-full md:w-[80%]">
               {agent.description}
             </p>
           )}
 
           {/* Ability description */}
           <div className="w-full">
-            <h2 className="font-sans font-medium text-xl text-zinc-200 uppercase">
+            <h2 className="font-sans font-medium md:text-xl text-zinc-200 uppercase">
               {tableSelectedInfo.displayName}
             </h2>
-            <p className="font-sans font-light text-md text-zinc-200">
+            <p className="font-sans font-medium md:font-light text-sm md:text-base text-zinc-200">
               {tableSelectedInfo.description}
             </p>
           </div>

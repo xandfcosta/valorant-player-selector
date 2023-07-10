@@ -12,22 +12,23 @@ interface AgentsCarrouselProps {
 }
 
 export default function AgentsCarrousel({ agents }: AgentsCarrouselProps) {
+  const isMobile = screen.width < 768
+  const startIndexRange = isMobile ? 2 : 6
+  const endIndexRange = isMobile ? 3 : 7
+
   const [agentIndex, setAgentIndex] = useState<number>(0)
   const [selectedAgent, setSelectedAgent] = useState<Agent>(agents[agentIndex])
   const [fromLeft, setFromLeft] = useState<boolean>(true)
   const [selectorAgents, setSelectorAgents] = useState<Agent[]>(
-    getSelectorAgents(agents.length - 6, 7),
+    getSelectorAgents(agents.length - startIndexRange, endIndexRange),
   )
 
   function getSelectorAgents(initialIndex: number, endIndex: number) {
     let i = initialIndex
     const selectorAgents = []
 
-    console.clear()
-
     while (i !== endIndex) {
       selectorAgents.push(agents[i])
-      console.log(agents[i].displayName, i)
       const indexOutOfRange = i + 1 > agents.length - 1
       i = indexOutOfRange ? 0 : i + 1
     }
@@ -38,8 +39,8 @@ export default function AgentsCarrousel({ agents }: AgentsCarrouselProps) {
   function moveSelector(distance: number) {
     const index = agentIndex + distance + agents.length
     const actualIndex = index % agents.length
-    const initialIndex = (index - 6) % agents.length
-    const endIndex = (index + 7) % agents.length
+    const initialIndex = (index - startIndexRange) % agents.length
+    const endIndex = (index + endIndexRange) % agents.length
 
     const selectorAgents = getSelectorAgents(initialIndex, endIndex)
 
@@ -52,7 +53,7 @@ export default function AgentsCarrousel({ agents }: AgentsCarrouselProps) {
   }
 
   return (
-    <div className="flex flex-col justify-center w-full h-full px-20">
+    <div className="flex flex-col justify-center w-full h-full px-4 md:px-20">
       {/* Absolute */}
       <AgentBackground agent={selectedAgent} />
       <AgentImage originDirection={fromLeft} agent={selectedAgent} />
