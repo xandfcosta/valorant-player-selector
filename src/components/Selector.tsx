@@ -53,19 +53,19 @@ export function Selector({
                 }}
               >
                 <div
-                  className="absolute top-1 left-1 bg-green-200 rounded-full w-[3px] h-[3px]"
+                  className="absolute top-1 left-1 bg-green-200 rounded-full w-[2px] h-[2px] md:w-[3px] md:h-[3px]"
                   style={{ opacity }}
                 ></div>
                 <div
-                  className="absolute top-1 right-1 bg-green-200 rounded-full w-[3px] h-[3px]"
+                  className="absolute top-1 right-1 bg-green-200 rounded-full w-[2px] h-[2px] md:w-[3px] md:h-[3px]"
                   style={{ opacity }}
                 ></div>
                 <div
-                  className="absolute bottom-1 left-1 bg-green-200 rounded-full w-[3px] h-[3px]"
+                  className="absolute bottom-1 left-1 bg-green-200 rounded-full w-[2px] h-[2px] md:w-[3px] md:h-[3px]"
                   style={{ opacity }}
                 ></div>
                 <div
-                  className="absolute bottom-1 right-1 bg-green-200 rounded-full w-[3px] h-[3px]"
+                  className="absolute bottom-1 right-1 bg-green-200 rounded-full w-[2px] h-[2px] md:w-[3px] md:h-[3px]"
                   style={{ opacity }}
                 ></div>
 

@@ -13,13 +13,13 @@ interface AgentInfoTableProps {
 }
 
 export function AgentInfoTable({
+  isMobile,
   agentId,
   role,
   abilities,
   selectedItem,
   setSelectedItem,
 }: AgentInfoTableProps) {
-  const isMobile = screen.width < 768
   const headers = ['c', 'q', 'e', 'x']
   abilities = abilities.filter((ability) => {
     return ability.slot !== 'Passive'
@@ -29,7 +29,7 @@ export function AgentInfoTable({
 
     return ability
   })
-  role.key = isMobile ? '!' : 'Info'
+  role.key = isMobile ? '!' : 'info'
   const infos = [role, ...abilities]
 
   return (
@@ -64,7 +64,6 @@ export function AgentInfoTable({
               initial={{ backgroundColor: 'rgb(0 0 0 / 0)' }}
               animate={headerStyle}
               className="mx-2 w-full px-2 text-center text-lg font-sans uppercase"
-              // style={headerStyle}
             >
               {info.key}
             </motion.h2>
