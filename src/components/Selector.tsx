@@ -69,21 +69,40 @@ export function Selector({
                   className="absolute bottom-1 right-1 bg-green-200 rounded-full w-[3px] h-[3px]"
                   style={{ opacity }}
                 ></div>
-                <motion.div
-                  key={agent.uuid}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.2, ease: 'easeOut' }}
-                >
-                  <Image
-                    src={agent.displayIcon}
-                    alt={`${agent.displayName} Icon`}
-                    width={100}
-                    height={100}
-                    priority
-                    style={{ opacity }}
-                  />
-                </motion.div>
+
+                {((fromLeft && index === 0) ||
+                  (!fromLeft && index === agents.length - 1)) && (
+                  <motion.div
+                    key={agent.uuid}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.2, ease: 'easeOut', duration: 0.1 }}
+                  >
+                    <Image
+                      src={agent.displayIcon}
+                      alt={`${agent.displayName} Icon`}
+                      width={100}
+                      height={100}
+                      priority
+                      style={{ opacity }}
+                    />
+                  </motion.div>
+                )}
+                {!(
+                  (fromLeft && index === 0) ||
+                  (!fromLeft && index === agents.length - 1)
+                ) && (
+                  <div>
+                    <Image
+                      src={agent.displayIcon}
+                      alt={`${agent.displayName} Icon`}
+                      width={100}
+                      height={100}
+                      priority
+                      style={{ opacity }}
+                    />
+                  </div>
+                )}
               </div>
             )
           })}
