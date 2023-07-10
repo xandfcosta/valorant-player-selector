@@ -12,7 +12,7 @@ interface AgentsCarrouselProps {
 }
 
 export default function AgentsCarrousel({ agents }: AgentsCarrouselProps) {
-  const isMobile = screen.width < 768
+  const isMobile = window.innerWidth < 768
   const startIndexRange = isMobile ? 2 : 6
   const endIndexRange = isMobile ? 3 : 7
 
