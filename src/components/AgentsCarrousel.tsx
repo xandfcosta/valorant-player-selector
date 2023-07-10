@@ -1,10 +1,8 @@
 'use client'
 
-// fix
-
 import { Agent } from '@/interfaces/agents'
-import { useEffect, useState } from 'react'
-import { AgentShower } from './AgentShower'
+import { useState } from 'react'
+import { AgentInfo } from './AgentInfo'
 import { Selector } from './Selector'
 import { AgentBackground } from './AgentBackground'
 import { AgentImage } from './AgentImage'
@@ -14,73 +12,60 @@ interface AgentsCarrouselProps {
 }
 
 export default function AgentsCarrousel({ agents }: AgentsCarrouselProps) {
-  const [selectedIndex, setSelectedIndex] = useState<number>(0)
+  const [agentIndex, setAgentIndex] = useState<number>(0)
+  const [selectedAgent, setSelectedAgent] = useState<Agent>(agents[agentIndex])
   const [fromLeft, setFromLeft] = useState<boolean>(true)
-  const [visibleAgents, setVisibleAgents] = useState<Agent[]>(
-    getVisibleAgents(selectedIndex),
-  )
-  const [selectedAgent, setSelectedAgent] = useState<Agent>(
-    visibleAgents[Math.floor(visibleAgents.length / 2)],
+  const [selectorAgents, setSelectorAgents] = useState<Agent[]>(
+    getSelectorAgents(agents.length - 6, 7),
   )
 
-  function getVisibleAgents(index: number) {
-    const doubleAgents = [...agents, ...agents]
+  function getSelectorAgents(initialIndex: number, endIndex: number) {
+    let i = initialIndex
+    const selectorAgents = []
 
-    let actualIndex = index % agents.length
+    console.clear()
 
-    if (actualIndex - 6 < 0) {
-      actualIndex += agents.length
+    while (i !== endIndex) {
+      selectorAgents.push(agents[i])
+      console.log(agents[i].displayName, i)
+      const indexOutOfRange = i + 1 > agents.length - 1
+      i = indexOutOfRange ? 0 : i + 1
     }
-    if (actualIndex + 7 > doubleAgents.length) {
-      actualIndex -= agents.length
-    }
 
-    return doubleAgents.slice(actualIndex - 6, actualIndex + 7)
-  }
-  function handleAgentClick(index: number) {
-    console.log(index)
-
-    const agents = getVisibleAgents(selectedIndex + index)
-    const selectedAgent = agents[Math.floor(agents.length / 2)]
-
-    setSelectedIndex(selectedIndex + index)
-    setSelectedAgent(selectedAgent)
-    setVisibleAgents(agents)
-  }
-  function handleSelectorChange(direction: 1 | -1) {
-    setFromLeft(direction < 0)
-    setSelectedIndex(selectedIndex + direction)
+    return selectorAgents
   }
 
-  useEffect(() => {
-    const agents = getVisibleAgents(selectedIndex)
-    const selectedAgent = agents[Math.floor(agents.length / 2)]
+  function moveSelector(distance: number) {
+    const index = agentIndex + distance + agents.length
+    const actualIndex = index % agents.length
+    const initialIndex = (index - 6) % agents.length
+    const endIndex = (index + 7) % agents.length
 
-    setSelectedAgent(selectedAgent)
-    setVisibleAgents(agents)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedIndex])
+    const selectorAgents = getSelectorAgents(initialIndex, endIndex)
+
+    setAgentIndex(actualIndex)
+    setSelectedAgent(agents[actualIndex])
+    setSelectorAgents(selectorAgents)
+    setFromLeft(distance < 0)
+
+    return selectorAgents
+  }
 
   return (
     <div className="flex flex-col justify-center w-full h-full px-20">
       {/* Absolute */}
-      <AgentBackground
-        agentId={selectedAgent.uuid}
-        url={selectedAgent.background}
-        colors={selectedAgent.backgroundGradientColors}
-      />
-      <AgentImage fromLeft={fromLeft} agent={selectedAgent} />
+      <AgentBackground agent={selectedAgent} />
+      <AgentImage originDirection={fromLeft} agent={selectedAgent} />
 
       {/* Relative */}
-      <div className="flex-1 z-10 flex justify-end items-center">
-        <AgentShower agent={selectedAgent}></AgentShower>
-      </div>
-
+      <AgentInfo agent={selectedAgent} />
       <Selector
-        agents={visibleAgents}
-        handleAgentClick={handleAgentClick}
-        handleSelectorChange={handleSelectorChange}
-      ></Selector>
+        agentId={agentIndex + 1}
+        maxAgents={agents.length}
+        agents={selectorAgents}
+        fromLeft={fromLeft}
+        moveSelector={moveSelector}
+      />
     </div>
   )
 }

@@ -1,5 +1,14 @@
+export interface Role {
+  key?: string
+  uuid: string
+  displayName: string
+  description: string
+  displayIcon: string
+  assetPath: string
+}
+
 export interface Ability {
-  key: string
+  key?: string
   slot: string
   displayName: string
   description: string

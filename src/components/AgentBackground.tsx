@@ -1,16 +1,17 @@
 import Image from 'next/image'
 import { motion } from 'framer-motion'
+import { Agent } from '@/interfaces/agents'
 
 interface AgentBackgroundProps {
-  agentId: string
-  url: string
-  colors: string[]
+  agent: Agent
 }
-export function AgentBackground({
-  agentId,
-  url,
-  colors,
-}: AgentBackgroundProps) {
+export function AgentBackground({ agent }: AgentBackgroundProps) {
+  const {
+    backgroundGradientColors: colors,
+    uuid: agentId,
+    background: backgroundUrl,
+  } = agent
+
   const bgGradient = `linear-gradient(to right bottom, #${colors[0]}, rgba(0, 0, 0, 0) 70%),
   linear-gradient(to left bottom, #${colors[1]}, rgba(0, 0, 0, 0) 70%),
   linear-gradient(to left top, #${colors[2]}, rgba(0, 0, 0, 0) 70%),
@@ -33,7 +34,7 @@ export function AgentBackground({
         className="relative w-full h-full overflow-hidden"
       >
         <Image
-          src={url}
+          src={backgroundUrl}
           alt={''}
           width={700}
           height={1024}
