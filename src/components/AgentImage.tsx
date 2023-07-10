@@ -1,6 +1,6 @@
 import { Agent } from '@/interfaces/agents'
 import Image from 'next/image'
-import { motion } from 'framer-motion'
+import { motion, cubicBezier } from 'framer-motion'
 
 interface AgentImageProps {
   agent: Agent
@@ -20,7 +20,11 @@ export function AgentImage({ agent, originDirection }: AgentImageProps) {
       }
   const finalState = { opacity: 1, x: '0px' }
   const exitState = { opacity: 0 }
-  const transition = { ease: 'easeOut', delay: 0.2 }
+  const transition = {
+    ease: cubicBezier(0.25, 0.75, 0.5, 1.25),
+    delay: 0.2,
+    duration: 0.15,
+  }
   const { backgroundGradientColors: colors } = agent
 
   return (
