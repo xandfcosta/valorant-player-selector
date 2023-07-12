@@ -1,7 +1,7 @@
 'use client'
 
 import { Agent } from '@/interfaces/agents'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { AgentInfo } from './AgentInfo'
 import { Selector } from './Selector'
 import { AgentBackground } from './AgentBackground'
@@ -12,12 +12,11 @@ interface AgentsCarrouselProps {
 }
 
 export default function AgentsCarrousel({ agents }: AgentsCarrouselProps) {
-  const [isMobile, setIsMobile] = useState<boolean>(false)
   const [agentIndex, setAgentIndex] = useState<number>(0)
   const [selectedAgent, setSelectedAgent] = useState<Agent>(agents[agentIndex])
   const [fromLeft, setFromLeft] = useState<boolean>(true)
   const [selectorAgents, setSelectorAgents] = useState<Agent[]>(
-    getSelectorAgents(0, isMobile ? 6 : 13),
+    getSelectorAgents(0, 13),
   )
 
   function getSelectorAgents(initialIndex: number, endIndex: number) {
@@ -36,8 +35,8 @@ export default function AgentsCarrousel({ agents }: AgentsCarrouselProps) {
   function moveSelector(distance: number) {
     const index = agentIndex + distance + agents.length
     const actualIndex = index % agents.length
-    const initialIndex = (index - (isMobile ? 3 : 6)) % agents.length
-    const endIndex = (index + (isMobile ? 4 : 7)) % agents.length
+    const initialIndex = (index - 6) % agents.length
+    const endIndex = (index + 7) % agents.length
 
     const selectorAgents = getSelectorAgents(initialIndex, endIndex)
 
@@ -49,23 +48,14 @@ export default function AgentsCarrousel({ agents }: AgentsCarrouselProps) {
     return selectorAgents
   }
 
-  useEffect(() => {
-    console.log(screen.width)
-    setIsMobile(screen.width < 768)
-  }, [])
-
-  useEffect(() => {
-    moveSelector(0)
-  }, [isMobile])
-
   return (
-    <div className="flex flex-col justify-center w-full h-full px-4 md:px-20">
+    <div className="flex flex-col justify-center w-full h-full px-4 md:px-20 overflow-hidden">
       {/* Absolute */}
       <AgentBackground agent={selectedAgent} />
       <AgentImage originDirection={fromLeft} agent={selectedAgent} />
 
       {/* Relative */}
-      <AgentInfo isMobile={isMobile} agent={selectedAgent} />
+      <AgentInfo agent={selectedAgent} />
       <Selector
         agentId={agentIndex + 1}
         maxAgents={agents.length}

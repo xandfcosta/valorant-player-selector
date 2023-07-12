@@ -24,19 +24,19 @@ export function Selector({
   const finalState = { x: '0px' }
 
   return (
-    <div className="flex flex-col items-center z-10">
+    <div className="flex flex-col h-full justify-end items-center gap-6 z-10">
       <div className="relative w-full h-[1px]">
         <div className="absolute top-0 left-0 h-full w-[5px] bg-zinc-200"></div>
         <div className="absolute top-0 left-0 h-full w-full bg-zinc-200 opacity-50"></div>
         <div className="absolute top-0 right-0 h-full w-[5px] bg-zinc-200"></div>
       </div>
-      <div className="flex justify-center select-none p-6">
+      <div className="flex flex-col items-center select-none">
         <motion.div
           key={`selector-${agentId}`}
           initial={initialState}
           animate={finalState}
           transition={{ ease: 'easeOut' }}
-          className="flex gap-2"
+          className="flex flex-col md:flex-row gap-2"
         >
           {agents?.map((agent, index) => {
             const middle = Math.floor(agents.length / 2)
@@ -106,30 +106,30 @@ export function Selector({
             )
           })}
         </motion.div>
-      </div>
-      <div className="flex">
-        <ChevronLeft
-          onClick={() => {
-            moveSelector(-1)
-          }}
-          color="#c1c1c1"
-          size={undefined}
-          className="bg-zinc-700/50 hover:bg-zinc-500/50 h-full p-2 w-[50px] cursor-pointer"
-        ></ChevronLeft>
-        <div
-          className="flex justify-center gap-2 items-center w-full select-none cursor-pointer bg-zinc-900/50 hover:bg-zinc-600/50 text-zinc-200 font-sans font-light"
-          onClick={() => moveSelector(-agentId + 1)}
-        >
-          <p>{agentId}</p>
-          <p>/</p>
-          <p>{maxAgents}</p>
+        <div className="flex h-full md:flex-row bg-zinc-700/50 hover:bg-zinc-500/50">
+          <ChevronLeft
+            onClick={() => {
+              moveSelector(-1)
+            }}
+            color="#c1c1c1"
+            size={undefined}
+            className=" h-full p-2 w-[50px] cursor-pointer"
+          ></ChevronLeft>
+          <div
+            className="flex flex-col md:flex-row justify-center gap-2 items-center w-full select-none cursor-pointer bg-zinc-900/50 hover:bg-zinc-600/50 text-zinc-200 font-sans font-light"
+            onClick={() => moveSelector(-agentId + 1)}
+          >
+            <p>{agentId}</p>
+            <p>/</p>
+            <p>{maxAgents}</p>
+          </div>
+          <ChevronRight
+            onClick={() => moveSelector(1)}
+            color="#c1c1c1"
+            size={undefined}
+            className="h-full p-2 w-[50px] cursor-pointer"
+          ></ChevronRight>
         </div>
-        <ChevronRight
-          onClick={() => moveSelector(1)}
-          color="#c1c1c1"
-          size={undefined}
-          className="bg-zinc-700/50 hover:bg-zinc-500/50 h-full p-2 w-[50px] cursor-pointer"
-        ></ChevronRight>
       </div>
     </div>
   )

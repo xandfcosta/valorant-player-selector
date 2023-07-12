@@ -5,7 +5,6 @@ import { motion } from 'framer-motion'
 import Image from 'next/image'
 
 interface AgentInfoTableProps {
-  isMobile: boolean
   agentId: string
   role: Role
   abilities: Ability[]
@@ -14,7 +13,6 @@ interface AgentInfoTableProps {
 }
 
 export function AgentInfoTable({
-  isMobile,
   agentId,
   role,
   abilities,
@@ -30,12 +28,12 @@ export function AgentInfoTable({
 
     return ability
   })
-  role.key = isMobile ? '!' : 'info'
+  role.key = 'info'
   const infos = [role, ...abilities]
 
   return (
     <div className="relative grid grid-cols-5 w-full h-[100px] justify-items-center items-center rounded-md gap-1">
-      <div className="absolute top-[39%] w-full md:w-[107%] left-0 md:left-[-7%] h-[1px] bg-zinc-200"></div>
+      <div className="absolute top-[39%] w-[107%] left-[-7%] h-[1px] bg-zinc-200"></div>
 
       {infos.map((info, index) => {
         const headerStyle = {

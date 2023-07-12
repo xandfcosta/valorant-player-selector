@@ -28,7 +28,7 @@ export function AgentImage({ agent, originDirection }: AgentImageProps) {
   const { backgroundGradientColors: colors } = agent
 
   return (
-    <div className="absolute top-[30%] right-[-100%] w-[300%] h-full md:top-0 md:left-0 md:w-full md:h-full z-0 overflow-hidden">
+    <div className="absolute top-0 left-0 w-full h-full z-0 overflow-hidden">
       <div className="relative w-full h-full">
         <div className="absolute top-0 left-0 w-full h-full">
           <motion.div
@@ -37,7 +37,7 @@ export function AgentImage({ agent, originDirection }: AgentImageProps) {
             animate={finalState}
             exit={exitState}
             transition={{ ...transition }}
-            className="relative w-full h-full overflow-hidden z-10"
+            className="relative w-full h-full z-10"
           >
             <Image
               src={agent.fullPortraitV2}

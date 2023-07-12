@@ -23,7 +23,7 @@ export default async function Home() {
   const agents: Agent[] = data.data
 
   return (
-    <div className="w-full h-full bg-zinc-900">
+    <div className="w-full h-full bg-zinc-900 overflow-hidden">
       <AgentsCarrousel agents={agents}></AgentsCarrousel>
     </div>
   )

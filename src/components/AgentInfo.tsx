@@ -6,10 +6,9 @@ import { AgentInfoTable } from './AgentInfoTable'
 import { motion } from 'framer-motion'
 
 interface AgentInfoProps {
-  isMobile: boolean
   agent: Agent
 }
-export function AgentInfo({ isMobile, agent }: AgentInfoProps) {
+export function AgentInfo({ agent }: AgentInfoProps) {
   const [tableSelectedInfo, setTableSelectedInfo] = useState<Ability | Role>(
     agent.role,
   )
@@ -56,7 +55,6 @@ export function AgentInfo({ isMobile, agent }: AgentInfoProps) {
         </div>
 
         <AgentInfoTable
-          isMobile={isMobile}
           agentId={agent.uuid}
           role={agent.role}
           abilities={agent.abilities}
